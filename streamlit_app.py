@@ -40,7 +40,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 
-df = pd.read_csv("https://raw.githubusercontent.com/<your-username>/<your-repo-name>/main/retail_store_sales.csv")
+df = pd.read_csv("https://github.com/bloxxastro1/Epsilon-Grad3/blob/main/retail_store_sales.csv")
 
 df.head() # initial data check``
 
