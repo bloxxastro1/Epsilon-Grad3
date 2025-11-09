@@ -41,7 +41,8 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 
 github_url = "https://github.com/bloxxastro1/Epsilon-Grad3/blob/main/retail_store_sales.csv"
-df = pd.read_csv(github_url) # loading dataset
+    df = pd.read_csv(uploaded_file, sep=",", engine="python", on_bad_lines="skip")
+ # loading dataset
 
 df.head() # initial data check``
 
