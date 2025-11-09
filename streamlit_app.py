@@ -44,9 +44,9 @@ github_url = "https://raw.githubusercontent.com/bloxxastro1/Epsilon-Grad3/main/r
 df = pd.read_csv(github_url, sep=",", engine="python", on_bad_lines="skip")
  # loading dataset
 
-df.head() # initial data check``
+st.write(df.head()) # initial data check``
 
-df.describe() # statistical summary
+st.write(df.describe()) # statistical summary
 
 df.info() # check for data types and null values
 
@@ -63,43 +63,40 @@ df['Quantity'].fillna(df['Quantity'].median(), inplace=True) # filling missing v
 
 df.info() # check for data types and null values
 
-
-df.info()
-
 df['Transaction Date'] = pd.to_datetime(df['Transaction Date']) # converting to datetime
 df['Month'] = df['Transaction Date'].dt.month # extracting month
 df['Day'] = df['Transaction Date'].dt.day # extracting day
 df['Year'] = df['Transaction Date'].dt.year # extracting year
 df = df.drop(columns=['Transaction Date']) # dropping original date column
 df['Total Spent'] = df['Price Per Unit'] * df['Quantity'] # creating total spent column
-df.info() # check for data types
+st.write(df.info()) # check for data types
 
 
 plt.pie(df["Category"].value_counts(), labels=df["Category"].value_counts().index, autopct='%1.1f%%') 
 plt.title("Distribution of Item Categories") # pie chart of item categories
-plt.show()
+st.write(plt.show())
 
 plt.pie(df['Payment Method'].value_counts(), labels=df['Payment Method'].value_counts().index, autopct='%1.1f%%')
 plt.title("Distribution of Payment Methods") # pie chart of payment methods
-plt.show()
+st.write(plt.show())
 
 plt.pie(df["Location"].value_counts(), labels=df["Location"].value_counts().index, autopct='%1.1f%%')
 plt.title("Distribution of Store Locations") # pie chart of store locations
-plt.show()
+st.write(plt.show())
 
-plt.scatter(df['Quantity'], df['Price Per Unit'])
+st.write(plt.scatter(df['Quantity'], df['Price Per Unit']))
 
 sns.boxplot(x='Month', y='Quantity', data=df) # box plot of total spent by month
 plt.title('Sales Distribution by Month') 
-plt.show()
+st.write(plt.show())
 
 sns.boxplot(x='Day', y='Quantity', data=df) # box plot of total spent by Day
 plt.title('Sales Distribution by Month') 
-plt.show()
+st.write(plt.show())
 
 sns.boxplot(x='Year', y='Quantity', data=df) # box plot of total spent by month
 plt.title('Sales Distribution by Month') 
-plt.show()
+st.write(plt.show())
 
 df.loc[df["Discount Applied"].isnull(), "Discount Applied"] = np.nan
 
@@ -146,13 +143,13 @@ for model in models:
         return_train_score=True
     )
     
-    print(f"Model: {model[0]}")
-    print("Train Accuracy : ", scores["train_accuracy"].mean())
-    print("Test Accuracy  : ", scores["test_accuracy"].mean())
-    print("Train Precision: ", scores["train_precision_weighted"].mean())
-    print("Test Precision : ", scores["test_precision_weighted"].mean())
-    print("Train Recall   : ", scores["train_recall_weighted"].mean())
-    print("Test Recall    : ", scores["test_recall_weighted"].mean())
-    print("Train F1 Score : ", scores["train_f1_weighted"].mean())
-    print("Test F1 Score  : ", scores["test_f1_weighted"].mean())
-    print('-' * 60)
+    st.write(f"Model: {model[0]}")
+    st.write("Train Accuracy : ", scores["train_accuracy"].mean())
+    st.write("Test Accuracy  : ", scores["test_accuracy"].mean())
+    st.write("Train Precision: ", scores["train_precision_weighted"].mean())
+    st.write("Test Precision : ", scores["test_precision_weighted"].mean())
+    st.write("Train Recall   : ", scores["train_recall_weighted"].mean())
+    st.write("Test Recall    : ", scores["test_recall_weighted"].mean())
+    st.write("Train F1 Score : ", scores["train_f1_weighted"].mean())
+    st.write("Test F1 Score  : ", scores["test_f1_weighted"].mean())
+    st.write('-' * 60)
