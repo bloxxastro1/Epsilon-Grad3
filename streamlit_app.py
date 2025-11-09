@@ -87,6 +87,8 @@ plt.pie(df["Location"].value_counts(), labels=df["Location"].value_counts().inde
 plt.title("Distribution of Store Locations") # pie chart of store locations
 plt.show()
 
+plt.scatter(df['Quantity'], df['Price Per Unit'])
+
 sns.boxplot(x='Month', y='Quantity', data=df) # box plot of total spent by month
 plt.title('Sales Distribution by Month') 
 plt.show()
