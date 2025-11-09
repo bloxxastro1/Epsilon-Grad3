@@ -50,7 +50,9 @@ df.describe() # statistical summary
 
 df.info() # check for data types and null values
 
-df = df.drop(columns = ["Customer ID","Transaction ID","Total Spent"]) # dropping irrelevant columns
+columns_to_drop = ['Customer ID', 'Transaction ID', 'Total Spent']
+existing_cols = [col for col in columns_to_drop if col in df.columns]
+df = df.drop(existing_cols, axis=1) # dropping irrelevant columns
 
 df.drop_duplicates(inplace=True) # removing duplicates
 df.duplicated().sum() # check for duplicates = 0
