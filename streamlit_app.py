@@ -40,6 +40,8 @@ from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 
+github_url = "https://raw.githubusercontent.com/<your-username>/<your-repo-name>/main/retail_store_sales.csv"
+df = pd.read_csv(github_url)
 df = pd.read_csv("retail_store_sales.csv") # loading dataset
 
 df.head() # initial data check``
