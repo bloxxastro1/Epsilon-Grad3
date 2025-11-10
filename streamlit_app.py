@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as px
 
 st.title("Grad Project Epsilon - Retail Store Sales Analysis")
 
@@ -46,10 +46,6 @@ df = pd.read_csv(github_url, sep=",", engine="python", on_bad_lines="skip")
 
 st.write(df.head()) # initial data check``
 
-st.write(df.describe()) # statistical summary
-
-df.info() # check for data types and null values
-
 columns_to_drop = ['Customer ID', 'Transaction ID', 'Total Spent']
 existing_cols = [col for col in columns_to_drop if col in df.columns]
 df = df.drop(existing_cols, axis=1) # dropping irrelevant columns
@@ -61,8 +57,6 @@ df.duplicated().sum() # check for duplicates = 0
 df['Price Per Unit'].fillna(df['Price Per Unit'].median(), inplace=True) # filling missing values with median
 df['Quantity'].fillna(df['Quantity'].median(), inplace=True) # filling missing values with median
 
-df.info() # check for data types and null values
-
 df['Transaction Date'] = pd.to_datetime(df['Transaction Date']) # converting to datetime
 df['Month'] = df['Transaction Date'].dt.month # extracting month
 df['Day'] = df['Transaction Date'].dt.day # extracting day
@@ -71,32 +65,39 @@ df = df.drop(columns=['Transaction Date']) # dropping original date column
 df['Total Spent'] = df['Price Per Unit'] * df['Quantity'] # creating total spent column
 st.write(df.info()) # check for data types
 
+col1, col2, col3 = st.columns(3)
 
-plt.pie(df["Category"].value_counts(), labels=df["Category"].value_counts().index, autopct='%1.1f%%') 
-plt.title("Distribution of Item Categories") # pie chart of item categories
-st.write(plt.show())
+with col1:
+    fig1 = px.pie(df, names='Category', title='Item Categories')
+    st.plotly_chart(fig1, use_container_width=True)
 
-plt.pie(df['Payment Method'].value_counts(), labels=df['Payment Method'].value_counts().index, autopct='%1.1f%%')
-plt.title("Distribution of Payment Methods") # pie chart of payment methods
-st.write(plt.show())
+with col2:
+    fig2 = px.pie(df, names='Payment Method', title='Payment Methods')
+    st.plotly_chart(fig2, use_container_width=True)
 
-plt.pie(df["Location"].value_counts(), labels=df["Location"].value_counts().index, autopct='%1.1f%%')
-plt.title("Distribution of Store Locations") # pie chart of store locations
-st.write(plt.show())
+with col3:
+    fig3 = px.pie(df, names='Location', title='Store Locations')
+    st.plotly_chart(fig3, use_container_width=True)
 
-st.write(plt.scatter(df['Quantity'], df['Price Per Unit']))
+# Full width for scatter plot
+fig4 = px.scatter(df, x='Quantity', y='Price Per Unit', 
+                 title='Quantity vs Price Per Unit')
+st.plotly_chart(fig4, use_container_width=True)
 
-sns.boxplot(x='Month', y='Quantity', data=df) # box plot of total spent by month
-plt.title('Sales Distribution by Month') 
-st.write(plt.show())
+# Box plots in columns
+col4, col5, col6 = st.columns(3)
 
-sns.boxplot(x='Day', y='Quantity', data=df) # box plot of total spent by Day
-plt.title('Sales Distribution by Month') 
-st.write(plt.show())
+with col4:
+    fig5 = px.box(df, x='Month', y='Quantity', title='By Month')
+    st.plotly_chart(fig5, use_container_width=True)
 
-sns.boxplot(x='Year', y='Quantity', data=df) # box plot of total spent by month
-plt.title('Sales Distribution by Month') 
-st.write(plt.show())
+with col5:
+    fig6 = px.box(df, x='Day', y='Quantity', title='By Day')
+    st.plotly_chart(fig6, use_container_width=True)
+
+with col6:
+    fig7 = px.box(df, x='Year', y='Quantity', title='By Year')
+    st.plotly_chart(fig7, use_container_width=True)
 
 df.loc[df["Discount Applied"].isnull(), "Discount Applied"] = np.nan
 
