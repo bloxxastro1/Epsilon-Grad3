@@ -69,67 +69,47 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-# Pie chart for Category distribution
 category_counts = df["Category"].value_counts()
+payment_counts = df['Payment Method'].value_counts()
+location_counts = df["Location"].value_counts()
+
+# Pie chart for Category distribution
 fig1 = px.pie(values=category_counts.values, 
               names=category_counts.index, 
               title='Distribution of Item Categories')
-st.plotly_chart(fig1, use_container_width=True)
+st.plotly_chart(fig1, use_container_width=True, key="pie_category")
 
 # Pie chart for Payment Method distribution
-payment_counts = df['Payment Method'].value_counts()
 fig2 = px.pie(values=payment_counts.values, 
               names=payment_counts.index, 
               title='Distribution of Payment Methods')
-st.plotly_chart(fig2, use_container_width=True)
+st.plotly_chart(fig2, use_container_width=True, key="pie_payment")
 
 # Pie chart for Location distribution
-location_counts = df["Location"].value_counts()
 fig3 = px.pie(values=location_counts.values, 
               names=location_counts.index, 
               title='Distribution of Store Locations')
-st.plotly_chart(fig3, use_container_width=True)
+st.plotly_chart(fig3, use_container_width=True, key="pie_location")
 
 # Scatter plot for Quantity vs Price Per Unit
 fig4 = px.scatter(df, x='Quantity', y='Price Per Unit', 
                  title='Quantity vs Price Per Unit')
-st.plotly_chart(fig4, use_container_width=True)
+st.plotly_chart(fig4, use_container_width=True, key="scatter_quantity_price")
 
 # Box plot for Sales Distribution by Month
 fig5 = px.box(df, x='Month', y='Quantity', 
              title='Sales Distribution by Month')
-st.plotly_chart(fig5, use_container_width=True)
+st.plotly_chart(fig5, use_container_width=True, key="box_month")
 
 # Box plot for Sales Distribution by Day
 fig6 = px.box(df, x='Day', y='Quantity', 
              title='Sales Distribution by Day')
-st.plotly_chart(fig6, use_container_width=True)
+st.plotly_chart(fig6, use_container_width=True, key="box_day")
 
 # Box plot for Sales Distribution by Year
 fig7 = px.box(df, x='Year', y='Quantity', 
              title='Sales Distribution by Year')
-st.plotly_chart(fig7, use_container_width=True)
-
-# Full width for scatter plot
-fig4 = px.scatter(df, x='Quantity', y='Price Per Unit', 
-                 title='Quantity vs Price Per Unit')
-st.plotly_chart(fig4, use_container_width=True)
-
-# Box plots in columns
-col4, col5, col6 = st.columns(3)
-
-with col4:
-    fig5 = px.box(df, x='Month', y='Quantity', title='By Month')
-    st.plotly_chart(fig5, use_container_width=True)
-
-with col5:
-    fig6 = px.box(df, x='Day', y='Quantity', title='By Day')
-    st.plotly_chart(fig6, use_container_width=True)
-
-with col6:
-    fig7 = px.box(df, x='Year', y='Quantity', title='By Year')
-    st.plotly_chart(fig7, use_container_width=True)
-
+st.plotly_chart(fig7, use_container_width=True, key="box_year")
 df.loc[df["Discount Applied"].isnull(), "Discount Applied"] = np.nan
 
 cols = ["Item","Payment Method", "Location", 'Discount Applied']
